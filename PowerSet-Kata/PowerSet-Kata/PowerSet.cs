@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace PowerSet_Kata
 {
@@ -6,7 +7,14 @@ namespace PowerSet_Kata
     {
         public int[][] Get(int[] set)
         {
-            return new[] {new int[0]};
+            if (set.Any() == false) {
+                return new[] { new int[0] };
+            }
+
+            return new[] {
+                new int[0],
+                new[] {set.First()}
+            };
         }
     }
 }
