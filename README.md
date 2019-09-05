@@ -17,7 +17,7 @@ Starting from this simple method :
 ```
 public class PowerSet
 {
-    public int[][] Get(int[] set)
+    public int[][] Subsets(int[] set)
     {
         ...
     }

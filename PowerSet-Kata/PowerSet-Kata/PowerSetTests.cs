@@ -12,22 +12,22 @@ namespace PowerSet_Kata
         }
 
         [Fact]
-        public void power_set_of_0_element_returns_empty_set()
+        public void subsets_of_an_empty_set_is_the_empty_set()
         {
-            var sets = _powerSet.Get(new int[0]);
+            var subsets = _powerSet.Subsets(new int[0]);
 
-            Assert.Collection(sets, set => Assert.Equal(new int[0], set));
+            Assert.Collection(subsets, set => Assert.Equal(new int[0], set));
         }
 
         [Theory]
         [InlineData(1)]
         [InlineData(10)]
         [InlineData(999)]
-        public void power_set_of_1_element_returns_empty_set_and_a_set_with_only_this_element(int element)
+        public void subsets_of_a_single_element_are_the_empty_set_and_a_set_with_only_this_number(int element)
         {
-            var sets = _powerSet.Get(new[] { element });
+            var subsets = _powerSet.Subsets(new[] { element });
 
-            Assert.Collection(sets,
+            Assert.Collection(subsets,
                 set => Assert.Equal(new int[0], set),
                 set => Assert.Equal(new[] { element }, set));
         }
@@ -35,11 +35,11 @@ namespace PowerSet_Kata
         [Theory]
         [InlineData(1, 2)]
         [InlineData(-1, 45)]
-        public void power_set_of_2_elements(int first, int second)
+        public void subsets_of_two_elements(int first, int second)
         {
-            var sets = _powerSet.Get(new[] { first, second });
+            var subsets = _powerSet.Subsets(new[] { first, second });
 
-            Assert.Collection(sets,
+            Assert.Collection(subsets,
                 set => Assert.Equal(new int[0], set),
                 set => Assert.Equal(new[] { first }, set),
                 set => Assert.Equal(new[] { second }, set),
@@ -47,11 +47,11 @@ namespace PowerSet_Kata
         }
 
         [Fact]
-        public void power_set_of_3_elements()
+        public void subsets_of_three_elements()
         {
-            var sets = _powerSet.Get(new[] { 1, 2, 3});
+            var subsets = _powerSet.Subsets(new[] { 1, 2, 3 });
 
-            Assert.Collection(sets,
+            Assert.Collection(subsets,
                 set => Assert.Equal(new int[0], set),
                 set => Assert.Equal(new[] { 1 }, set),
                 set => Assert.Equal(new[] { 2 }, set),
@@ -64,11 +64,11 @@ namespace PowerSet_Kata
         }
 
         [Fact]
-        public void power_set_of_3_letters()
+        public void subsets_of_three_letters()
         {
-            var sets = _powerSet.Get(new[] { 'a', 'b', 'c' });
+            var subsets = _powerSet.Subsets(new[] { 'a', 'b', 'c' });
 
-            Assert.Collection(sets,
+            Assert.Collection(subsets,
                 set => Assert.Equal(new char[0], set),
                 set => Assert.Equal(new[] { 'a' }, set),
                 set => Assert.Equal(new[] { 'b' }, set),

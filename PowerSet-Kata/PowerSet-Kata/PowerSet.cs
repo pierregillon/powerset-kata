@@ -4,7 +4,7 @@ namespace PowerSet_Kata
 {
     public class PowerSet
     {
-        public T[][] Get<T>(T[] set)
+        public T[][] Subsets<T>(T[] set)
         {
             if (set.Any() == false) {
                 return new[] { new T[0] };
@@ -12,7 +12,7 @@ namespace PowerSet_Kata
 
             var element = set.First();
             var rest = set.Skip(1).ToArray();
-            var sets = Get(rest);
+            var sets = Subsets(rest);
 
             return Enumerable.Empty<T[]>()
                 .Union(sets)
