@@ -5,20 +5,19 @@ namespace PowerSet_Kata
 {
     public class PowerSetTests
     {
-        private readonly PowerSet _powerset;
+        private readonly PowerSet _powerSet;
 
         public PowerSetTests()
         {
-            _powerset = new PowerSet();
+            _powerSet = new PowerSet();
         }
 
         [Fact]
         public void power_set_of_0_element_returns_empty_set()
         {
-            var sets = _powerset.Get(new int[0]);
+            var sets = _powerSet.Get(new int[0]);
 
-            Assert.Single(sets);
-            Assert.Equal(new int[0], sets.Single());
+            Assert.Collection(sets, set => Assert.Equal(new int[0], set));
         }
 
         [Theory]
@@ -27,25 +26,24 @@ namespace PowerSet_Kata
         [InlineData(999)]
         public void power_set_of_1_element_returns_empty_set_and_a_set_with_only_this_element(int element)
         {
-            var sets = _powerset.Get(new[] { element });
+            var sets = _powerSet.Get(new[] { element });
 
-            Assert.Equal(2, sets.Length);
-            Assert.Equal(new int[0], sets.First());
-            Assert.Equal(new[] { element }, sets.Last());
+            Assert.Collection(sets,
+                set => Assert.Equal(new int[0], set),
+                set => Assert.Equal(new[] { element }, set));
         }
 
         [Theory]
         [InlineData(1, 2)]
         public void power_set_of_2_elements(int first, int second)
         {
-            var sets = _powerset.Get(new[] { first, second });
+            var sets = _powerSet.Get(new[] { first, second });
 
-            Assert.Equal(4, sets.Length);
-            Assert.Collection(sets, 
+            Assert.Collection(sets,
                 set => Assert.Equal(new int[0], set),
+                set => Assert.Equal(new[] { first }, set),
                 set => Assert.Equal(new[] { second }, set),
-                set => Assert.Equal(new [] { first }, set),
-                set => Assert.Equal(new[] { second, first }, set));
+                set => Assert.Equal(new[] { first, second }, set));
         }
     }
 }

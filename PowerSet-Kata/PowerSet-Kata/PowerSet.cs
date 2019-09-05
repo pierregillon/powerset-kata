@@ -12,17 +12,19 @@ namespace PowerSet_Kata
                 return new[] { new int[0] };
             }
 
-            var list = new Queue<int>(set);
-            var element = list.Dequeue();
-            var others = Get(list.ToArray());
+            var element = set.FirstOrDefault();
+            var others = Get(set.Skip(1).ToArray());
             var finalSets = new List<int[]>(others) { new[] { element } };
             foreach (var otherSet in others) {
                 if (otherSet.Any()) {
-                    finalSets.Add(otherSet.Union(new []{ element }).ToArray());
+                    finalSets.Add(otherSet.Union(new[] { element }).OrderBy(x => x).ToArray());
                 }
             }
 
-            return finalSets.ToArray();
+            return finalSets
+                .OrderBy(x => x.Length)
+                .ThenBy(x => x.FirstOrDefault())
+                .ToArray();
         }
     }
 }
