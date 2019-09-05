@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PowerSet_Kata
@@ -6,33 +8,23 @@ namespace PowerSet_Kata
     {
         public T[][] Subsets<T>(T[] set)
         {
-            if (set.Any() == false) {
-                return new[] { new T[0] };
+            var results = new List<List<T>>();
+            for (int binaryIndex = 0; binaryIndex < Math.Pow(2, set.Length); binaryIndex++) {
+                var result = new List<T>();
+                for (int i = 0; i < set.Length; i++) {
+                    if (((int) Math.Pow(2, i) & binaryIndex) == (int) Math.Pow(2, i)) {
+                        result.Add(set[i]);
+                    }
+                }
+
+                results.Add(result);
             }
 
-            var element = set.First();
-            var rest = set.Skip(1).ToArray();
-            var sets = Subsets(rest);
-
-            return Enumerable.Empty<T[]>()
-                .Union(sets)
-                .Union(sets.Union(element))
+            return results
+                .Select(x => x.ToArray())
                 .OrderBy(x => x.Length)
                 .ThenBy(x => x.FirstOrDefault())
                 .ToArray();
-        }
-    }
-
-    public static class SetExtensions
-    {
-        public static T[][] Union<T>(this T[][] sets, T element)
-        {
-            var query =
-                from set in sets
-                let unionSet = set.Union(new[] { element }).OrderBy(x => x)
-                select unionSet.ToArray();
-
-            return query.ToArray();
         }
     }
 }
