@@ -8,23 +8,28 @@ namespace PowerSet_Kata
     {
         public T[][] Subsets<T>(T[] set)
         {
-            var results = new List<List<T>>();
-            for (int binaryIndex = 0; binaryIndex < Math.Pow(2, set.Length); binaryIndex++) {
-                var result = new List<T>();
-                for (int i = 0; i < set.Length; i++) {
-                    if (((int) Math.Pow(2, i) & binaryIndex) == (int) Math.Pow(2, i)) {
-                        result.Add(set[i]);
-                    }
-                }
-
-                results.Add(result);
-            }
-
-            return results
+            return GetFromBinaryTable(set)
                 .Select(x => x.ToArray())
                 .OrderBy(x => x.Length)
                 .ThenBy(x => x.FirstOrDefault())
                 .ToArray();
+        }
+
+        private static IEnumerable<IEnumerable<T>> GetFromBinaryTable<T>(IReadOnlyList<T> set)
+        {
+            for (var binaryValue = 0; binaryValue < Math.Pow(2, set.Count); binaryValue++) {
+                yield return GetElementsMatchingWithBinaryValue(set, binaryValue);
+            }
+        }
+
+        private static IEnumerable<T> GetElementsMatchingWithBinaryValue<T>(IReadOnlyList<T> set, int binaryValue)
+        {
+            for (var i = 0; i < set.Count; i++) {
+                var pow = (int) Math.Pow(2, i);
+                if ((pow & binaryValue) == pow) {
+                    yield return set[i];
+                }
+            }
         }
     }
 }
