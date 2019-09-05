@@ -33,5 +33,19 @@ namespace PowerSet_Kata
             Assert.Equal(new int[0], sets.First());
             Assert.Equal(new[] { element }, sets.Last());
         }
+
+        [Theory]
+        [InlineData(1, 2)]
+        public void power_set_of_2_elements(int first, int second)
+        {
+            var sets = _powerset.Get(new[] { first, second });
+
+            Assert.Equal(4, sets.Length);
+            Assert.Collection(sets, 
+                set => Assert.Equal(new int[0], set),
+                set => Assert.Equal(new[] { second }, set),
+                set => Assert.Equal(new [] { first }, set),
+                set => Assert.Equal(new[] { second, first }, set));
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PowerSet_Kata
@@ -11,10 +12,17 @@ namespace PowerSet_Kata
                 return new[] { new int[0] };
             }
 
-            return new[] {
-                new int[0],
-                new[] {set.First()}
-            };
+            var list = new Queue<int>(set);
+            var element = list.Dequeue();
+            var others = Get(list.ToArray());
+            var finalSets = new List<int[]>(others) { new[] { element } };
+            foreach (var otherSet in others) {
+                if (otherSet.Any()) {
+                    finalSets.Add(otherSet.Union(new []{ element }).ToArray());
+                }
+            }
+
+            return finalSets.ToArray();
         }
     }
 }
