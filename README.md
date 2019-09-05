@@ -9,3 +9,17 @@ NB: {ᵩ} is the empty set.
 
 ## Objective
 Given a set of numbers, print all the possible subsets of it including empty set.
+
+## Code sample
+
+Starting from this simple method :
+
+```
+public class PowerSet
+{
+    public int[][] Get(int[] set)
+    {
+        ...
+    }
+}
+```
