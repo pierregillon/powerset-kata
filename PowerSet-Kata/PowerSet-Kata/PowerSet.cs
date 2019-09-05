@@ -4,17 +4,17 @@ namespace PowerSet_Kata
 {
     public class PowerSet
     {
-        public int[][] Get(int[] set)
+        public T[][] Get<T>(T[] set)
         {
             if (set.Any() == false) {
-                return new[] { new int[0] };
+                return new[] { new T[0] };
             }
 
             var element = set.First();
             var rest = set.Skip(1).ToArray();
             var sets = Get(rest);
 
-            return Enumerable.Empty<int[]>()
+            return Enumerable.Empty<T[]>()
                 .Union(new[] { new[] { element } })
                 .Union(sets)
                 .Union(sets.Union(element))
@@ -26,7 +26,7 @@ namespace PowerSet_Kata
 
     public static class SetExtensions
     {
-        public static int[][] Union(this int[][] sets, int element)
+        public static T[][] Union<T>(this T[][] sets, T element)
         {
             var query =
                 from set in sets

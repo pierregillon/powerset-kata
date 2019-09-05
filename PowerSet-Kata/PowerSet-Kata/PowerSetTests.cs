@@ -62,5 +62,22 @@ namespace PowerSet_Kata
                 set => Assert.Equal(new[] { 1, 2, 3 }, set)
             );
         }
+
+        [Fact]
+        public void power_set_of_3_letters()
+        {
+            var sets = _powerSet.Get(new[] { 'a', 'b', 'c' });
+
+            Assert.Collection(sets,
+                set => Assert.Equal(new char[0], set),
+                set => Assert.Equal(new[] { 'a' }, set),
+                set => Assert.Equal(new[] { 'b' }, set),
+                set => Assert.Equal(new[] { 'c' }, set),
+                set => Assert.Equal(new[] { 'a', 'b' }, set),
+                set => Assert.Equal(new[] { 'a', 'c' }, set),
+                set => Assert.Equal(new[] { 'b', 'c' }, set),
+                set => Assert.Equal(new[] { 'a', 'b', 'c' }, set)
+            );
+        }
     }
 }
