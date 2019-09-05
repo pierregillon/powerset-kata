@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace PowerSet_Kata
@@ -78,6 +80,22 @@ namespace PowerSet_Kata
                 set => Assert.Equal(new[] { 'b', 'c' }, set),
                 set => Assert.Equal(new[] { 'a', 'b', 'c' }, set)
             );
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(5)]
+        [InlineData(10)]
+        public void subsets_count_of_n_elements_is_2_pow_n(int elementCount)
+        {
+            var set = new List<int>();
+            for (var i = 0; i < elementCount; i++) {
+                set.Add(i);
+            }
+
+            var subsets = _powerSet.Subsets(set.ToArray());
+
+            Assert.Equal(Math.Pow(2, elementCount), subsets.Length);
         }
     }
 }
