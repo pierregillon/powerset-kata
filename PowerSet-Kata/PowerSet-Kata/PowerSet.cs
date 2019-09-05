@@ -15,7 +15,6 @@ namespace PowerSet_Kata
             var sets = Get(rest);
 
             return Enumerable.Empty<T[]>()
-                .Union(new[] { new[] { element } })
                 .Union(sets)
                 .Union(sets.Union(element))
                 .OrderBy(x => x.Length)
@@ -30,7 +29,6 @@ namespace PowerSet_Kata
         {
             var query =
                 from set in sets
-                where set.Any()
                 let unionSet = set.Union(new[] { element }).OrderBy(x => x)
                 select unionSet.ToArray();
 
