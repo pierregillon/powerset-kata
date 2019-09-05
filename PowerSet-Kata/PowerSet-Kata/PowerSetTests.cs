@@ -1,4 +1,3 @@
-using System.Linq;
 using Xunit;
 
 namespace PowerSet_Kata
@@ -35,6 +34,7 @@ namespace PowerSet_Kata
 
         [Theory]
         [InlineData(1, 2)]
+        [InlineData(-1, 45)]
         public void power_set_of_2_elements(int first, int second)
         {
             var sets = _powerSet.Get(new[] { first, second });
@@ -44,6 +44,23 @@ namespace PowerSet_Kata
                 set => Assert.Equal(new[] { first }, set),
                 set => Assert.Equal(new[] { second }, set),
                 set => Assert.Equal(new[] { first, second }, set));
+        }
+
+        [Fact]
+        public void power_set_of_3_elements()
+        {
+            var sets = _powerSet.Get(new[] { 1, 2, 3});
+
+            Assert.Collection(sets,
+                set => Assert.Equal(new int[0], set),
+                set => Assert.Equal(new[] { 1 }, set),
+                set => Assert.Equal(new[] { 2 }, set),
+                set => Assert.Equal(new[] { 3 }, set),
+                set => Assert.Equal(new[] { 1, 2 }, set),
+                set => Assert.Equal(new[] { 1, 3 }, set),
+                set => Assert.Equal(new[] { 2, 3 }, set),
+                set => Assert.Equal(new[] { 1, 2, 3 }, set)
+            );
         }
     }
 }
