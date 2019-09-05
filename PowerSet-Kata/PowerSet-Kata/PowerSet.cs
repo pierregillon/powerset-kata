@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 
 namespace PowerSet_Kata
@@ -11,19 +10,31 @@ namespace PowerSet_Kata
                 return new[] { new int[0] };
             }
 
-            var element = set.FirstOrDefault();
-            var others = Get(set.Skip(1).ToArray());
-            var finalSets = new List<int[]>(others) { new[] { element } };
-            foreach (var otherSet in others) {
-                if (otherSet.Any()) {
-                    finalSets.Add(otherSet.Union(new[] { element }).OrderBy(x => x).ToArray());
-                }
-            }
+            var element = set.First();
+            var rest = set.Skip(1).ToArray();
+            var sets = Get(rest);
 
-            return finalSets
+            return Enumerable.Empty<int[]>()
+                .Union(new[] { new[] { element } })
+                .Union(sets)
+                .Union(sets.Union(element))
                 .OrderBy(x => x.Length)
                 .ThenBy(x => x.FirstOrDefault())
                 .ToArray();
+        }
+    }
+
+    public static class SetExtensions
+    {
+        public static int[][] Union(this int[][] sets, int element)
+        {
+            var query =
+                from set in sets
+                where set.Any()
+                let unionSet = set.Union(new[] { element }).OrderBy(x => x)
+                select unionSet.ToArray();
+
+            return query.ToArray();
         }
     }
 }
